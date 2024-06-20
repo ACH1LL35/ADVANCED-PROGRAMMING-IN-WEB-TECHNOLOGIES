@@ -3,7 +3,7 @@
     readonly GuestID: number;
     readonly Subject: string;
     readonly Message: string;
-    readonly Status: boolean;
+    readonly Status: number;
 
   }
 
@@ -12,7 +12,7 @@
     readonly GuestID: number;
     readonly Subject: string;
     readonly Message: string;
-    readonly Status: boolean;
+    readonly Status: number;
 
   }
 
@@ -21,6 +21,7 @@
     readonly GuestID: string;
     readonly CourseID: string;
     readonly Content: string;
+    readonly Status: number;
   
   }
   

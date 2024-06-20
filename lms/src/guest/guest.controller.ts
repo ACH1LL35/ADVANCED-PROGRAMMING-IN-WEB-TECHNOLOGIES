@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query } from "@nestjs/common";
 import { GuestService } from "./guest.service";
 import { NoteDto, PostDto, SupportDto } from "./guest.dto";
 
@@ -60,4 +60,49 @@ export default class GuestController{
       user: NoteDto,
     };
     }
+
+    @Put('updatenote/:id')
+  async updateNote(
+    @Param('id') id: string,
+    @Body() updateNoteDto: Partial<NoteDto>
+  ) {
+    console.log('Updating Note ID:', id);
+    console.log('Received Updated Note Data:', updateNoteDto);
+
+    // Simulate updating the note
+    return {
+      message: 'Note updated successfully',
+      noteId: id,
+      updatedData: updateNoteDto,
+    };
+  }
+
+  @Patch('patchnote/:id')
+  async patchNote(
+    @Param('id') id: string,
+    @Body() updateNoteDto: Partial<NoteDto>
+  ) {
+    console.log('Patching Note ID:', id);
+    console.log('Received Patch Data:', updateNoteDto);
+
+    // Simulate patching the note
+    return {
+      message: 'Note patched successfully',
+      noteId: id,
+      patchedData: updateNoteDto,
+    };
+  }
+
+  @Delete('deletenote/:id')
+  async deleteNote(
+    @Param('id') id: string
+  ) {
+    console.log('Deleting Note ID:', id);
+
+    // Simulate deleting the note
+    return {
+      message: 'Note deleted successfully',
+      noteId: id,
+    };
+  }
 }
