@@ -1,5 +1,6 @@
-import { Controller, Get, Param, Query } from "@nestjs/common";
+import { Controller, Get, Param, Post, Query, UseInterceptors } from "@nestjs/common";
 import { GuestService } from "./guest.service";
+import { FileInterceptor } from "@nestjs/platform-express";
 
 @Controller('guest')
 export class GuestController{
