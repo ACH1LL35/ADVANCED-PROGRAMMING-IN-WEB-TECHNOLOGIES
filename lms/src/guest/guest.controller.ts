@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post, Query, UseInterceptors } from "@nestjs/common";
 import { GuestService } from "./guest.service";
-import { GuestUserDTO, SupportDto } from "./guest.dto";
+import { GuestUserDTO, PostDto, SupportDto } from "./guest.dto";
 
 @Controller('guest')
 export default class GuestController{
@@ -48,6 +48,16 @@ export default class GuestController{
     return {
       message: 'guest created successfully',
       user: GuestDTO,
+    };
+    }
+
+    @Post('forumpost')
+    async forumPost(@Body() PostDto: PostDto) {
+    console.log('Received Post Data:', PostDto);
+
+    return {
+      message: 'Post created successfully',
+      user: PostDto,
     };
     }
 }

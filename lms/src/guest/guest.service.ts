@@ -30,4 +30,8 @@ export class GuestService{
         return myobj;
     }
 
+    forumPost(myobj:object): object{
+        return myobj;
+    }
+
 }
