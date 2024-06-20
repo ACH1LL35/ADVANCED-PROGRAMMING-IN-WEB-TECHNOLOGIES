@@ -22,4 +22,12 @@ export class GuestService{
         return {message: "Instructor Name: "+name}
     }
 
+    ContactSupport(myobj:object): object{
+        return myobj;
+    }
+
+    createUser(myobj:object): object{
+        return myobj;
+    }
+
 }

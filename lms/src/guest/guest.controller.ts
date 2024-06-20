@@ -1,9 +1,9 @@
-import { Controller, Get, Param, Post, Query, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Query, UseInterceptors } from "@nestjs/common";
 import { GuestService } from "./guest.service";
-import { FileInterceptor } from "@nestjs/platform-express";
+import { GuestUserDTO, SupportDto } from "./guest.dto";
 
 @Controller('guest')
-export class GuestController{
+export default class GuestController{
     constructor (private readonly GuestService: GuestService){}
 
     @Get()
@@ -29,5 +29,25 @@ export class GuestController{
     @Get('getinstructorbyname')
     getInstructorByName(@Query('name') name: string): object{
         return this.GuestService.getinstructorByName(name);
+    }
+
+    @Post('contactsupport')
+    async ContactSupport(@Body() SupportDto: SupportDto) {
+    console.log('Received Support Data:', SupportDto);
+
+    return {
+      message: 'Ticket Submitted successfully',
+      user: SupportDto,
+    };
+    }
+
+    @Post('createuser')
+    async createUser(@Body() GuestDTO: GuestUserDTO) {
+    console.log('Received User Data:', GuestDTO);
+
+    return {
+      message: 'guest created successfully',
+      user: GuestDTO,
+    };
     }
 }
