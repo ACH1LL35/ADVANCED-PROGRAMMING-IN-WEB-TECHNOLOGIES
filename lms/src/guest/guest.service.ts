@@ -34,4 +34,8 @@ export class GuestService{
         return myobj;
     }
 
+    guestNote(myobj:object): object{
+        return myobj;
+    }
+
 }

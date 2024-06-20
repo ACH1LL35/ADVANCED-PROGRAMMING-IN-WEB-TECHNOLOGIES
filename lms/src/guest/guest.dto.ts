@@ -15,4 +15,12 @@
     readonly Status: boolean;
 
   }
+
+  export class NoteDto {
+    readonly NoteID: string;
+    readonly GuestID: string;
+    readonly CourseID: string;
+    readonly Content: string;
+  
+  }
   
