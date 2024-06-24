@@ -1,17 +1,10 @@
 // custom-validators.ts
 
-import {
-    ValidationOptions,
-    ValidatorConstraint,
-    ValidatorConstraintInterface,
-    registerDecorator,
-    ValidationArguments,
-  } from 'class-validator';
+import {ValidationOptions,ValidatorConstraint,ValidatorConstraintInterface,registerDecorator,ValidationArguments,} from 'class-validator';
   
   @ValidatorConstraint({ name: 'isPhoneNumber', async: false })
   export class IsPhoneNumberConstraint implements ValidatorConstraintInterface {
     validate(phoneNumber: any, args: ValidationArguments) {
-      // Check if the phone number is exactly 11 digits and consists only of digits
       if (!/^\d{11}$/.test(phoneNumber)) {
         return false;
       }
