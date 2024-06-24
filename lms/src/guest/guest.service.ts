@@ -1,7 +1,12 @@
 import {Injectable} from "@nestjs/common";
+import { GuestRegistrationDTO } from "./guest.dto";
 
 @Injectable()
 export class GuestService{
+
+    registerGuest(guestRegistrationDto: GuestRegistrationDTO): object {
+        return { message: 'Guest registered successfully', data: guestRegistrationDto };
+      }
     getCourse(): Object{
         return {message: "Course"}
     }

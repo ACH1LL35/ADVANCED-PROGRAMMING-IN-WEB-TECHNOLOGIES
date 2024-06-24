@@ -1,16 +1,22 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query, UsePipes, ValidationPipe } from "@nestjs/common";
 import { GuestService } from "./guest.service";
-import { InstructorDTO, NoteDto, PostDto, SupportDto } from "./guest.dto";
-import { query } from "express";
+import { GuestRegistrationDTO, InstructorDTO, NoteDto, PostDto, SupportDto } from "./guest.dto";
 
 @Controller('guest')
 export default class GuestController{
     constructor (private readonly GuestService: GuestService){}
 
-    @Get()
+    @Post('registerguest')
+    @UsePipes(new ValidationPipe())
+    registerGuest(@Body() GuestRegistrationDTO: GuestRegistrationDTO): object {
+      return this.GuestService.registerGuest(GuestRegistrationDTO);
+    }
+
+    @Get('getcourse')
     getCourse(): object{
         return this.GuestService.getCourse();
     }
+
 
     @Get('getcoursebyid/:id')
     getCourseById(@Param('id') id:number ): object{

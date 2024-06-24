@@ -1,5 +1,28 @@
-import { IsDateString, IsEmail, IsInt, IsString, Matches,isDate,isURL } from "class-validator";
+import { IsDateString, IsEmail, IsInt, IsNotEmpty, IsString, Matches,isNotEmpty,isURL } from "class-validator";
+import { IsPhoneNumber } from './custom-validators';
 
+  export class GuestRegistrationDTO {
+  @IsInt()
+  readonly GuestID: number;
+  @IsNotEmpty()
+  @IsString()
+  @Matches(/^[A-Za-z\s]+$/, { message: 'Name must not contain numbers' })
+  readonly GuestFName: string;
+  @IsNotEmpty()
+  @IsString()
+  @Matches(/^[A-Za-z\s]+$/, { message: 'Name must not contain numbers' })
+  readonly GuestLName: string;
+  @IsNotEmpty()
+  @IsEmail()
+  readonly GuestEmail: string;
+  // @IsNotEmpty()
+  readonly Password: string;
+  @IsPhoneNumber()
+  readonly PhoneNumber: number;
+  // @IsString()
+  readonly Address: string;
+
+}
   export class SupportDto {
     
     readonly SupportID: number;
