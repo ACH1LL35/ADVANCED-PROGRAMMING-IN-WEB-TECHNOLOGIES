@@ -1,6 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query, UsePipes, ValidationPipe } from "@nestjs/common";
 import { GuestService } from "./guest.service";
-import { NoteDto, PostDto, SupportDto } from "./guest.dto";
+import { InstructorDTO, NoteDto, PostDto, SupportDto } from "./guest.dto";
+import { query } from "express";
 
 @Controller('guest')
 export default class GuestController{
@@ -26,10 +27,19 @@ export default class GuestController{
         return this.GuestService.getInstructorById(id);
     }
 
-    @Get('getinstructorbyname')
-    getInstructorByName(@Query('name') name: string): object{
-        return this.GuestService.getinstructorByName(name);
+    @Get('getinstructorByName')
+    @UsePipes(new ValidationPipe())
+    getInstructorByName(@Query() query: InstructorDTO): InstructorDTO {
+      return {
+        InstructorID: query.InstructorID,
+        InstructorName: query.InstructorName,
+        InstructorEmail: query.InstructorEmail,
+        InstructorJoinDate: query.InstructorJoinDate,
+        // InstructorSocialHandle: query.InstructorSocialHandle,
+        InstructorDes: query.InstructorDes,
+        InstructorStat: query.InstructorStat
     }
+  }
 
     @Post('contactsupport')
     async ContactSupport(@Body() SupportDto: SupportDto) {
