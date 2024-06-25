@@ -1,5 +1,6 @@
-import { IsDateString, IsEmail, IsInt, IsNotEmpty, IsString, Matches,isNotEmpty,isURL } from "class-validator";
-import { IsPhoneNumber } from './custom-validators';
+import { Type } from "class-transformer";
+import { IsDate, IsDateString, IsEmail, IsInt, IsNotEmpty, IsString, IsUrl, Matches,MaxLength,isNotEmpty,isURL, maxLength } from "class-validator";
+import { Url } from "url";
 
   export class GuestRegistrationDTO {
   @IsInt()
@@ -14,13 +15,23 @@ import { IsPhoneNumber } from './custom-validators';
   readonly GuestLName: string;
   @IsNotEmpty()
   @IsEmail()
+  @MaxLength(30)
   readonly GuestEmail: string;
-  // @IsNotEmpty()
+  @IsNotEmpty()
+  @Matches(/[@#$&]/, { message: 'Password must contain at least one special character (@, #, $, or &).' })
   readonly Password: string;
-  @IsPhoneNumber()
-  readonly PhoneNumber: number;
-  // @IsString()
+  @Matches(/^\d{11}$/, { message: 'Please insert  a valid 11 digit Phone Number' })
+  readonly PhoneNumber: string;
+  @IsNotEmpty({ message: 'Date of birth is required (YYYY-MM-DD).' })
+  @IsDate({ message: 'Date of birth must be a valid date (YYYY-MM-DD).' })
+  @Type(() => Date)
+  readonly DateOfBirth: Date;
+  @IsString()
   readonly Address: string;
+  @IsNotEmpty({ message: 'LinkedIn profile URL is required.' })
+  @IsUrl({}, { message: 'LinkedIn profile must be a valid URL.' })
+  @Matches(/^https:\/\/www\.linkedin\.com\/in\/[a-zA-Z0-9-]+\/?$/, { message: 'LinkedIn profile URL must match the pattern "www.linkedin.com/in/".' })
+  readonly SocialHandle: Url;
 
 }
   export class SupportDto {
