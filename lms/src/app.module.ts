@@ -11,7 +11,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     port: 5432,
     username: 'postgres',
     password: 'tiger',
-    database: 'AdvWebtech',
+    database: 'labtest',
     autoLoadEntities: true,
     synchronize: true,
     } ),],
