@@ -6,7 +6,7 @@ import { GuestEntity } from './guest/guest.entity';
 import { GuestsModule } from './guest/guest.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot({
+  imports: [GuestsModule, TypeOrmModule.forRoot({
     type: 'postgres',
     host: 'localhost',
     port: 5432,
@@ -16,8 +16,7 @@ import { GuestsModule } from './guest/guest.module';
     entities: [GuestEntity],
     autoLoadEntities: true,
     synchronize: true,
-  }),
-  GuestsModule,],
+  }),],
   controllers: [AppController],
   providers: [AppService],
 })

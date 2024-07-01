@@ -5,7 +5,7 @@ import { GuestsController } from './guest.controller';
 import { GuestsService } from './guest.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([GuestEntity])],
+  imports: [GuestsModule,TypeOrmModule.forFeature([GuestEntity])],
   providers: [GuestsService],
   controllers: [GuestsController],
 })
