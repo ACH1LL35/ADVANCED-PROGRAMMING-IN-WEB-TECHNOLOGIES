@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, UsePipes, ValidationPipe } from '@nestjs/common';
 import { GuestEntity } from './guest.entity';
-import { GuestRegistrationDTO } from './guest.dto';
 import { GuestsService } from './guest.service';
+import { GuestRegistrationDTO } from './guest.dto';
+
 
 @Controller('guests')
 export class GuestsController {
@@ -13,22 +14,24 @@ export class GuestsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number): Promise<GuestEntity> {
+  findOne(@Param('id', new ValidationPipe({ transform: true })) id: number): Promise<string | GuestEntity> {
     return this.guestsService.findOne(id);
   }
 
   @Post()
-  create(@Body() guestData: GuestRegistrationDTO): Promise<GuestEntity> {
+  @UsePipes(new ValidationPipe({ transform: true }))
+  create(@Body() guestData: GuestRegistrationDTO): Promise<string> {
     return this.guestsService.create(guestData);
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() guestData: GuestRegistrationDTO): Promise<void> {
+  @UsePipes(new ValidationPipe({ transform: true }))
+  update(@Param('id', new ValidationPipe({ transform: true })) id: number, @Body() guestData: GuestRegistrationDTO): Promise<string> {
     return this.guestsService.update(id, guestData);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: number): Promise<void> {
+  remove(@Param('id', new ValidationPipe({ transform: true })) id: number): Promise<string> {
     return this.guestsService.remove(id);
   }
 }

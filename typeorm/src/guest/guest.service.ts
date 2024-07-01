@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { GuestEntity } from './guest.entity';
@@ -15,20 +15,33 @@ export class GuestsService {
     return await this.guestRepository.find();
   }
 
-  async findOne(id: number): Promise<GuestEntity> {
-    return await this.guestRepository.findOne({ where: { GuestID: id } });
+  async findOne(id: number): Promise<string | GuestEntity> {
+    const guest = await this.guestRepository.findOne({ where: { GuestID: id } });
+    if (!guest) {
+      return `Guest with ID ${id} not found`;
+    }
+    return guest;
   }
 
-  async create(guestData: GuestRegistrationDTO): Promise<GuestEntity> {
+  async create(guestData: GuestRegistrationDTO): Promise<string> {
     const newGuest = this.guestRepository.create(guestData);
-    return await this.guestRepository.save(newGuest);
+    await this.guestRepository.save(newGuest);
+    return 'Guest registration completed';
   }
 
-  async update(id: number, guestData: GuestRegistrationDTO): Promise<void> {
-    await this.guestRepository.update(id, guestData);
+  async update(id: number, guestData: GuestRegistrationDTO): Promise<string> {
+    const result = await this.guestRepository.update(id, guestData);
+    if (result.affected === 0) {
+      return `Guest with ID ${id} not found`;
+    }
+    return `Guest with ID ${id} updated`;
   }
 
-  async remove(id: number): Promise<void> {
-    await this.guestRepository.delete(id);
+  async remove(id: number): Promise<string> {
+    const result = await this.guestRepository.delete(id);
+    if (result.affected === 0) {
+      return `Guest with ID ${id} not found`;
+    }
+    return `Guest with ID ${id} removed`;
   }
 }

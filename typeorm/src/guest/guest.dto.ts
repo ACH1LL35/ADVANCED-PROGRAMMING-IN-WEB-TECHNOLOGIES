@@ -1,9 +1,7 @@
 import { Type } from 'class-transformer';
-import { IsDate, IsEmail, IsInt, IsNotEmpty, IsString, IsUrl, Matches, MaxLength } from 'class-validator';
+import { IsDate, IsEmail, IsInt, IsNotEmpty, IsString, Matches, MaxLength } from 'class-validator';
 
 export class GuestRegistrationDTO {
-  @IsInt()
-  readonly GuestID: number;
 
   @IsNotEmpty()
   @IsString()
