@@ -26,6 +26,4 @@ export class GuestEntity {
   @Column()
   Address: string;
 
-  @Column()
-  Reg_Date: Date;
 }
