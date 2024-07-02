@@ -4,6 +4,7 @@ import { GuestsService } from './guest.service';
 import { GuestRegistrationDTO } from './guest.dto';
 
 
+
 @Controller('guests')
 export class GuestsController {
   constructor(private readonly guestsService: GuestsService) {}
@@ -20,13 +21,13 @@ export class GuestsController {
 
   @Post()
   @UsePipes(new ValidationPipe({ transform: true }))
-  create(@Body() guestData: GuestRegistrationDTO): Promise<string> {
+  create(@Body() guestData: GuestRegistrationDTO): Promise<GuestEntity> {
     return this.guestsService.create(guestData);
   }
 
   @Put(':id')
   @UsePipes(new ValidationPipe({ transform: true }))
-  update(@Param('id', new ValidationPipe({ transform: true })) id: number, @Body() guestData: GuestRegistrationDTO): Promise<string> {
+  update(@Param('id', new ValidationPipe({ transform: true })) id: number, @Body() guestData: GuestRegistrationDTO): Promise<string | GuestEntity> {
     return this.guestsService.update(id, guestData);
   }
 

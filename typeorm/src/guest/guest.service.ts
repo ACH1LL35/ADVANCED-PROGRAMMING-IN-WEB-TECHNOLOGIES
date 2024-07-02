@@ -23,18 +23,19 @@ export class GuestsService {
     return guest;
   }
 
-  async create(guestData: GuestRegistrationDTO): Promise<string> {
+  async create(guestData: GuestRegistrationDTO): Promise<GuestEntity> {
     const newGuest = this.guestRepository.create(guestData);
     await this.guestRepository.save(newGuest);
-    return 'Guest registration completed';
+    return newGuest;
   }
 
-  async update(id: number, guestData: GuestRegistrationDTO): Promise<string> {
+  async update(id: number, guestData: GuestRegistrationDTO): Promise<string | GuestEntity> {
     const result = await this.guestRepository.update(id, guestData);
     if (result.affected === 0) {
       return `Guest with ID ${id} not found`;
     }
-    return `Guest with ID ${id} updated`;
+    const updatedGuest = await this.guestRepository.findOne({ where: { GuestID: id } });
+    return updatedGuest;
   }
 
   async remove(id: number): Promise<string> {
