@@ -1,5 +1,3 @@
-// parent.controller.ts
-
 import { Controller, Post, Body, Patch, Param, Session, Delete, BadRequestException, Logger } from '@nestjs/common';
 import { ParentService } from './parent.service';
 import { ParentDto, UpdateParentDto } from './parent.dto';
@@ -21,8 +19,8 @@ export class ParentController {
     try {
       await this.sendRegistrationEmail(createdParent.Email);
     } catch (error) {
-      // Handle email sending error (optional)
       this.logger.error(`Failed to send registration email to ${createdParent.Email}`, error.stack);
+      // Handle email sending error (optional)
     }
 
     return { message: 'Profile created successfully / registration complete', parent: createdParent };
@@ -36,6 +34,14 @@ export class ParentController {
   ) {
     const sessionParentId = parseInt(session.parentId); // Parse session.parentId to number if necessary
     const updatedParent = await this.parentService.update(id, updateParentDto, sessionParentId);
+
+    try {
+      await this.sendProfileUpdatedEmail(updatedParent.Email); // Send email on successful profile update
+    } catch (error) {
+      this.logger.error(`Failed to send profile updated email to ${updatedParent.Email}`, error.stack);
+      // Handle email sending error (optional)
+    }
+
     return { message: 'Profile edited successfully', parent: updatedParent };
   }
 
@@ -61,6 +67,14 @@ export class ParentController {
       to: email,
       subject: 'Welcome to Our Platform',
       text: 'Thank you for registering as a parent on our platform.',
+    });
+  }
+
+  private async sendProfileUpdatedEmail(email: string) {
+    await this.mailerService.sendMail({
+      to: email,
+      subject: 'Profile Update Notification',
+      text: 'Some of your information of your profile on our platform was changed.',
     });
   }
 }
