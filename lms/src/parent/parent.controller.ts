@@ -1,7 +1,9 @@
-import { Controller, Post, Body, Patch, Param, Session, Delete, BadRequestException, Logger } from '@nestjs/common';
+// parent.controller.ts
+
+import { Controller, Post, Body, Patch, Param, Session, Delete, BadRequestException, Logger, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ParentService } from './parent.service';
 import { ParentDto, UpdateParentDto } from './parent.dto';
-import { MailerService } from '@nestjs-modules/mailer'; // Import MailerService
+import { MailerService } from '@nestjs-modules/mailer';
 
 @Controller('parents')
 export class ParentController {
@@ -9,10 +11,11 @@ export class ParentController {
 
   constructor(
     private readonly parentService: ParentService,
-    private readonly mailerService: MailerService, // Inject MailerService
+    private readonly mailerService: MailerService,
   ) {}
 
   @Post()
+  @UsePipes(new ValidationPipe({ transform: true }))
   async create(@Body() createParentDto: ParentDto) {
     const createdParent = await this.parentService.create(createParentDto);
 
@@ -27,6 +30,7 @@ export class ParentController {
   }
 
   @Patch(':id')
+  @UsePipes(new ValidationPipe({ transform: true }))
   async update(
     @Param('id') id: number,
     @Body() updateParentDto: UpdateParentDto,
