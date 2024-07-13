@@ -20,7 +20,7 @@ export class Parent {
   Mobile: string;
 
   @Column()
-  Password: string; // Add password field
+  Password: string;
 
   @Column({ default: () => 'CURRENT_TIMESTAMP' })
   RegistrationDate: Date;

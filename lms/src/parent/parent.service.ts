@@ -3,7 +3,7 @@
 import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { MailerService } from '@nestjs-modules/mailer'; // Import MailerService
+import { MailerService } from '@nestjs-modules/mailer';
 import { Parent } from './parent.entity';
 import { ParentDto, UpdateParentDto } from './parent.dto';
 
@@ -12,7 +12,7 @@ export class ParentService {
   constructor(
     @InjectRepository(Parent)
     private readonly parentRepository: Repository<Parent>,
-    private readonly mailerService: MailerService, // Inject MailerService
+    private readonly mailerService: MailerService,
   ) {}
 
   async create(parentDto: ParentDto): Promise<Parent> {

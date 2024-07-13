@@ -23,7 +23,6 @@ export class ParentController {
       await this.sendRegistrationEmail(createdParent.Email);
     } catch (error) {
       this.logger.error(`Failed to send registration email to ${createdParent.Email}`, error.stack);
-      // Handle email sending error (optional)
     }
 
     return { message: 'Profile created successfully / registration complete', parent: createdParent };
@@ -43,7 +42,6 @@ export class ParentController {
       await this.sendProfileUpdatedEmail(updatedParent.Email); // Send email on successful profile update
     } catch (error) {
       this.logger.error(`Failed to send profile updated email to ${updatedParent.Email}`, error.stack);
-      // Handle email sending error (optional)
     }
 
     return { message: 'Profile edited successfully', parent: updatedParent };
